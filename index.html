@@ -9,7 +9,7 @@
 
 <body>
     <div class="display">
-        <p class="text"></p>
+        <p class="text">0</p>
     </div>
     <div class="container">
         <button class="empty"></button>
@@ -35,6 +35,9 @@
     </div>
 
     <script>
+        const container = document.querySelector(".container");
+        const display = document.querySelector("p");
+
         function add(firstNum, secondNum) {
             return firstNum + secondNum;
         };
@@ -50,40 +53,62 @@
 
         let firstNumber = 0;
         let secondNumber = 0;
-        let operator;
+        let operator = "";
         let chosen = false;
+
+        function clear() {
+            firstNumber = 0;
+            secondNumber = 0;
+            operator = "";
+            chosen = false;
+        };
 
         function operate(opr, firstNum, secondNum) {
 
             switch (opr) {
                 case "+":
-                    add(firstNum, secondNum);
+                    display.textContent = add(firstNum, secondNum);
                     break;
                 case "-":
-                    subtract(firstNum, secondNum);
+                    display.textContent = subtract(firstNum, secondNum);
                     break;
                 case "*":
-                    multiply(firstNum, secondNum);
+                    display.textContent = multiply(firstNum, secondNum);
                     break;
                 case "/":
-                    divide(firstNum, secondNum);
+                    display.textContent = divide(firstNum, secondNum);
                     break;
             };
         };
         function update() {
-            const container = document.querySelector(".container");
-            const display = document.querySelector("p");
 
             container.addEventListener('click', (event) => {
                 if (event.target.className === "digit" && chosen === false) {
                     firstNumber += event.target.textContent;
-                    display.textContent += event.target.textContent;
+                    display.textContent = Number(firstNumber);
+
                 }
                 if (event.target.className === "operator") {
                     operator = event.target.textContent;
                     chosen = true;
                 }
-                console.log(Number(firstNumber), operator)
+                if (event.target.className === "digit" && chosen === true) {
+                    secondNumber += event.target.textContent;
+                    display.textContent = Number(secondNumber);
+                }
+                if (event.target.className === "equal" && chosen === true) {
+                    operate(operator, Number(firstNumber), Number(secondNumber));
+                    chosen = false;
+                    clear();
+
+
+                }
+                if (event.target.className === "clear") {
+                    clear();
+                    display.textContent = "0";
+                }
+
+                console.log(firstNumber, operator, secondNumber)
 
             })
         };
