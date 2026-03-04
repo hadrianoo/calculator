@@ -9,29 +9,29 @@
 
 <body>
     <div class="display">
-        <p class="text">0</p>
+        <p class="text"></p>
     </div>
-    <div id="container">
-        <button id="empty"></button>
-        <button id="empty"></button>
-        <button id="empty"></button>
-        <button id="div" class="operator">/</button>
-        <button id="7" class="digit">7</button>
-        <button id="8" class="digit">8</button>
-        <button id="9" class="digit">9</button>
-        <button id="multi" class="operator">*</button>
-        <button id="4" class="digit">4</button>
-        <button id="5" class="digit">5</button>
-        <button id="6" class="digit">6</button>
-        <button id="sub" class="operator">-</button>
-        <button id="1" class="digit">1</button>
-        <button id="2" class="digit">2</button>
-        <button id="3" class="digit">3</button>
-        <button id="add" class="operator">+</button>
-        <button id="empty"></button>
-        <button id="0" class="digit">0</button>
-        <button id="clear">CE</button>
-        <button id="equal" class="operator">=</button>
+    <div class="container">
+        <button class="empty"></button>
+        <button class="empty"></button>
+        <button class="empty"></button>
+        <button class="operator">/</button>
+        <button class="digit">7</button>
+        <button class="digit">8</button>
+        <button class="digit">9</button>
+        <button class="operator">*</button>
+        <button class="digit">4</button>
+        <button class="digit">6</button>
+        <button class="digit">5</button>
+        <button class="operator">-</button>
+        <button class="digit">1</button>
+        <button class="digit">2</button>
+        <button class="digit">3</button>
+        <button class="operator">+</button>
+        <button class="empty"></button>
+        <button class="digit">0</button>
+        <button class="clear">CE</button>
+        <button class="equal">=</button>
     </div>
 
     <script>
@@ -48,9 +48,10 @@
             return firstNum / secondNum;
         };
 
-        let firstNumber;
-        let secondNumber;
+        let firstNumber = 0;
+        let secondNumber = 0;
         let operator;
+        let chosen = false;
 
         function operate(opr, firstNum, secondNum) {
 
@@ -70,16 +71,20 @@
             };
         };
         function update() {
-            const container = document.querySelector("#container");
+            const container = document.querySelector(".container");
             const display = document.querySelector("p");
 
             container.addEventListener('click', (event) => {
-                if (event.target.className === "digit") {
-                    firstNumber = event.target.id;
-                    display.textContent = event.target.textContent;
-                    console.log(event.target.textContent)
-
+                if (event.target.className === "digit" && chosen === false) {
+                    firstNumber += event.target.textContent;
+                    display.textContent += event.target.textContent;
                 }
+                if (event.target.className === "operator") {
+                    operator = event.target.textContent;
+                    chosen = true;
+                }
+                console.log(Number(firstNumber), operator)
+
             })
         };
         update()

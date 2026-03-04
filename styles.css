@@ -1,11 +1,11 @@
-#container {
+.container {
     display: flex;
     flex-wrap: wrap;
     width: 260px;
     gap: 4px;
 }
 
-#container>button {
+.container>button {
     flex: 1;
     height: 55px;
     min-width: 50px;
@@ -16,6 +16,7 @@
     box-sizing: border-box;
     border: 10px solid gray;
     width: 260px;
+    margin-bottom: 4px;
 
 }
 
@@ -23,5 +24,7 @@ p {
     font-size: 20px;
     margin: 4px;
     text-align: end;
+    height: 22px;
+
 
 }
