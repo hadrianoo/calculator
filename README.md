@@ -44,6 +44,8 @@ calculator/
 ## Future Improvements
 
 - add keyboard support 
+- calculator state as one object
+- better UI
 
 ## Credits
 
