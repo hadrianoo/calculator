@@ -43,7 +43,7 @@ calculator/
 
 ## Future Improvements
 
-
+- add keyboard support 
 
 ## Credits
 
