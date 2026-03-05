@@ -14,7 +14,7 @@
     <div class="container">
         <button class="empty"></button>
         <button class="empty"></button>
-        <button class="empty"></button>
+        <button class="back">DEL</button>
         <button class="operator">/</button>
         <button class="digit">7</button>
         <button class="digit">8</button>
@@ -28,7 +28,7 @@
         <button class="digit">2</button>
         <button class="digit">3</button>
         <button class="operator">+</button>
-        <button class="empty"></button>
+        <button class="dot">.</button>
         <button class="digit">0</button>
         <button class="clear">CE</button>
         <button class="equal">=</button>
@@ -48,23 +48,22 @@
             return firstNum * secondNum;
         };
         function divide(firstNum, secondNum) {
+            if (secondNum === Number(0)) return "Not this time";
             return Number((firstNum / secondNum).toFixed(4));
         };
 
-        let firstNumber = 0;
-        let secondNumber = 0;
+        let firstNumber = "";
+        let secondNumber = "";
         let operator = "";
         let isFirstNumChosen = false;
-        let isSecondNumChosen = false;
         let isOperatorChosen = false;
 
         function clear() {
 
-            firstNumber = 0;
-            secondNumber = 0;
+            firstNumber = "";
+            secondNumber = "";
             operator = "";
             isFirstNumChosen = false;
-            isSecondNumChosen = false;
             isOperatorChosen = false;
         };
 
@@ -85,6 +84,7 @@
                     break;
             };
         };
+
         function update() {
 
             container.addEventListener('click', (event) => {
@@ -95,41 +95,35 @@
                         // first number
                         if (isFirstNumChosen === false) {
                             firstNumber += button.textContent;
-                            display.textContent = Number(firstNumber);
+                            display.textContent = firstNumber;
                             // second number
                         } else {
                             secondNumber += button.textContent;
-                            display.textContent = Number(secondNumber);
+                            display.textContent = secondNumber;
                             isOperatorChosen = false;
                         }
                         break;
                     }
                     case "operator": {
-
                         if (isFirstNumChosen === true && isOperatorChosen === false) {
                             operate(operator, Number(firstNumber), Number(secondNumber));
                             operator = button.textContent;
                             firstNumber = display.textContent;
-                            secondNumber = 0;
+                            secondNumber = "";
                         } else {
                             operator = button.textContent;
                             isOperatorChosen = true;
                             isFirstNumChosen = true;
                         }
-
                         break;
                     }
                     case "equal": {
                         if (isFirstNumChosen === true && isOperatorChosen === false) {
                             operate(operator, Number(firstNumber), Number(secondNumber));
                             firstNumber = display.textContent;
-                            secondNumber = 0;
+                            secondNumber = "0";
                             clear();
                         }
-                        // else {
-                        //     isFirstNumChosen = true;
-                        // }
-
                         break;
                     }
                     case "clear": {
@@ -137,12 +131,26 @@
                         clear();
                         break;
                     }
+                    case "dot": {
+                        if (isFirstNumChosen === false && firstNumber.length !== 0) {
+                            firstNumber += button.textContent;
+                            display.textContent = firstNumber;
+                        } else if (secondNumber.length !== 0) {
+                            secondNumber += button.textContent;
+                            display.textContent = secondNumber;
+                        }
+                        break;
+                    }
+                    case "back": {
+                        if (isFirstNumChosen === false && firstNumber.length !== 0) {
+                            firstNumber = firstNumber.slice(0, -1);
+                            display.textContent = firstNumber;
+                        } else if (secondNumber.length !== 0) {
+                            secondNumber = secondNumber.slice(0, -1);
+                            display.textContent = secondNumber;
+                        }
+                    }
                 }
-
-                console.log(`firstNumber: ${firstNumber} operator: ${operator} 
-                secondNumber: ${secondNumber} isFirstNumChosen: ${isFirstNumChosen} 
-                isOperatorChosen: ${isOperatorChosen} isSecondNumChosen ${isSecondNumChosen}`)
-
             })
         };
         update()
