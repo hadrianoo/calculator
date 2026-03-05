@@ -88,44 +88,46 @@
         function update() {
 
             container.addEventListener('click', (event) => {
-                let target = event.target
+                let button = event.target;
 
-                switch (target.className) {
+                switch (button.className) {
                     case "digit": {
                         // first number
                         if (isFirstNumChosen === false) {
-                            firstNumber += target.textContent;
+                            firstNumber += button.textContent;
                             display.textContent = Number(firstNumber);
                             // second number
-                        } else if (isSecondNumChosen === false && isOperatorChosen === true) {
-                            secondNumber += target.textContent;
+                        } else if (isSecondNumChosen === false && isFirstNumChosen === true) {
+                            secondNumber += button.textContent;
                             display.textContent = Number(secondNumber);
                             isOperatorChosen = false;
                         }
                         break;
                     }
                     case "operator": {
-                        // calculation if oberator chosen after second number
                         if (isFirstNumChosen === true && isOperatorChosen === false) {
                             operate(operator, Number(firstNumber), Number(secondNumber));
-                            operator = target.textContent;
+                            operator = button.textContent;
                             isSecondNumChosen = false;
                             firstNumber = display.textContent;
                             secondNumber = 0;
-                            isOperatorChosen = true;
-                            // doing always when click operator
                         } else {
-                            operator = target.textContent;
-                            isFirstNumChosen = true;
+                            operator = button.textContent;
                             isOperatorChosen = true;
+                            isFirstNumChosen = true;
                         }
                         break;
                     }
                     case "equal": {
-                        if (isFirstNumChosen === true) {
+                        if (isFirstNumChosen === true && isOperatorChosen === false) {
                             operate(operator, Number(firstNumber), Number(secondNumber));
-                            clear();
+                            isSecondNumChosen = false;
+                            firstNumber = display.textContent;
+                            secondNumber = 0;
+                        } else {
+                            isFirstNumChosen = true;
                         }
+                        clear();
                         break;
                     }
                     case "clear": {
