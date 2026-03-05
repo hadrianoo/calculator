@@ -48,19 +48,22 @@
             return firstNum * secondNum;
         };
         function divide(firstNum, secondNum) {
-            return firstNum / secondNum;
+            return Number((firstNum / secondNum).toFixed(4));
         };
 
         let firstNumber = 0;
         let secondNumber = 0;
         let operator = "";
-        let chosen = false;
+        let chosenFirstNumber = false;
+        let chosenSecondNumber = false;
 
         function clear() {
+
             firstNumber = 0;
             secondNumber = 0;
             operator = "";
-            chosen = false;
+            chosenFirstNumber = false;
+            chosenSecondNumber = false;
         };
 
         function operate(opr, firstNum, secondNum) {
@@ -83,30 +86,65 @@
         function update() {
 
             container.addEventListener('click', (event) => {
-                if (event.target.className === "digit" && chosen === false) {
-                    firstNumber += event.target.textContent;
-                    display.textContent = Number(firstNumber);
+                let target = event.target
 
+                switch (target.className) {
+                    case "digit": {
+                        if (chosenFirstNumber === false) {
+                            firstNumber += event.target.textContent;
+                            display.textContent = Number(firstNumber);
+                        } else if (chosenSecondNumber === false) {
+                            secondNumber += event.target.textContent;
+                            display.textContent = Number(secondNumber);
+                        }
+                        break;
+                    }
+                    case "operator": {
+                        operator = event.target.textContent;
+                        chosenFirstNumber = true;
+                        break;
+                    }
+
+                    case "equal": {
+                        if (chosenFirstNumber === true) {
+                            operate(operator, Number(firstNumber), Number(secondNumber));
+                            chosenFirstNumber = false;
+                            clear();
+                        }
+                        break;
+                    }
+                    case "clear": {
+                        display.textContent = "0";
+                        clear();
+                        break;
+                    }
                 }
-                if (event.target.className === "operator") {
-                    operator = event.target.textContent;
-                    chosen = true;
-                }
-                if (event.target.className === "digit" && chosen === true) {
-                    secondNumber += event.target.textContent;
-                    display.textContent = Number(secondNumber);
-                }
-                if (event.target.className === "equal" && chosen === true) {
-                    operate(operator, Number(firstNumber), Number(secondNumber));
-                    chosen = false;
-                    clear();
+
+                // if (event.target.className === "digit" && chosenFirstNumber === false) {
+                //     firstNumber += event.target.textContent;
+                //     display.textContent = Number(firstNumber);
+
+                // }
+                // if (event.target.className === "operator") {
+                //     operator = event.target.textContent;
+                //     chosenFirstNumber = true;
+                // }
+                // if (event.target.className === "digit" && chosenFirstNumber === true) {
+                //     secondNumber += event.target.textContent;
+                //     display.textContent = Number(secondNumber);
+                // }
 
 
-                }
-                if (event.target.className === "clear") {
-                    clear();
-                    display.textContent = "0";
-                }
+
+                // if (event.target.className === "equal" && chosenFirstNumber === true) {
+                //     operate(operator, Number(firstNumber), Number(secondNumber));
+                //     chosenFirstNumber = false;
+                //     clear();
+                // }
+                // if (event.target.className === "clear") {
+                //     clear();
+                //     display.textContent = "0";
+                // }
 
                 console.log(firstNumber, operator, secondNumber)
 
