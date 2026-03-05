@@ -92,11 +92,9 @@
 
                 switch (button.className) {
                     case "digit": {
-                        // first number
                         if (!isFirstNumChosen) {
                             firstNumber += button.textContent;
                             display.textContent = firstNumber;
-                            // second number
                         } else {
                             secondNumber += button.textContent;
                             display.textContent = secondNumber;
@@ -139,12 +137,15 @@
                     }
                     case "back": {
                         if (!isFirstNumChosen && firstNumber.length !== 0) {
+                            console.log(firstNumber)
                             firstNumber = firstNumber.slice(0, -1);
+                            console.log(firstNumber)
                             display.textContent = firstNumber;
                         } else if (secondNumber.length !== 0) {
                             secondNumber = secondNumber.slice(0, -1);
                             display.textContent = secondNumber;
                         }
+                        break;
                     }
                     case "clear": {
                         display.textContent = "0";

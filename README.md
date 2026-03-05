@@ -27,7 +27,8 @@ Live:
 
 ## What I Practiced
 
-
+- CSS
+- switch statement 
 
 ## Project Structure
 
