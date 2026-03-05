@@ -93,7 +93,7 @@
                 switch (button.className) {
                     case "digit": {
                         // first number
-                        if (isFirstNumChosen === false) {
+                        if (!isFirstNumChosen) {
                             firstNumber += button.textContent;
                             display.textContent = firstNumber;
                             // second number
@@ -105,7 +105,7 @@
                         break;
                     }
                     case "operator": {
-                        if (isFirstNumChosen === true && isOperatorChosen === false) {
+                        if (isFirstNumChosen && !isOperatorChosen) {
                             operate(operator, Number(firstNumber), Number(secondNumber));
                             operator = button.textContent;
                             firstNumber = display.textContent;
@@ -118,42 +118,38 @@
                         break;
                     }
                     case "equal": {
-                        if (isFirstNumChosen === true && isOperatorChosen === false) {
+                        if (isFirstNumChosen && !isOperatorChosen) {
                             operate(operator, Number(firstNumber), Number(secondNumber));
                             firstNumber = display.textContent;
-                            secondNumber = "0";
+                            secondNumber = "";
                             clear();
                         }
                         break;
                     }
-                    case "clear": {
-                        display.textContent = "0";
-                        clear();
-                        break;
-                    }
                     case "dot": {
-                        if (!firstNumber.includes(".")) {
-                            if (isFirstNumChosen === false && firstNumber.length !== 0) {
-                                firstNumber += button.textContent;
-                                display.textContent = firstNumber;
-                            }
+                        if (!firstNumber.includes(".") && !isFirstNumChosen && firstNumber.length !== 0) {
+                            firstNumber += button.textContent;
+                            display.textContent = firstNumber;
                         }
-                        if (!secondNumber.includes(".")) {
-                            if (secondNumber.length !== 0) {
-                                secondNumber += button.textContent;
-                                display.textContent = secondNumber;
-                            }
+                        if (!secondNumber.includes(".") && secondNumber.length !== 0) {
+                            secondNumber += button.textContent;
+                            display.textContent = secondNumber;
                         }
                         break;
                     }
                     case "back": {
-                        if (isFirstNumChosen === false && firstNumber.length !== 0) {
+                        if (!isFirstNumChosen && firstNumber.length !== 0) {
                             firstNumber = firstNumber.slice(0, -1);
                             display.textContent = firstNumber;
                         } else if (secondNumber.length !== 0) {
                             secondNumber = secondNumber.slice(0, -1);
                             display.textContent = secondNumber;
                         }
+                    }
+                    case "clear": {
+                        display.textContent = "0";
+                        clear();
+                        break;
                     }
                 }
             })
