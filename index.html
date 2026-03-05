@@ -97,7 +97,7 @@
                             firstNumber += button.textContent;
                             display.textContent = Number(firstNumber);
                             // second number
-                        } else if (isSecondNumChosen === false && isFirstNumChosen === true) {
+                        } else {
                             secondNumber += button.textContent;
                             display.textContent = Number(secondNumber);
                             isOperatorChosen = false;
@@ -105,10 +105,10 @@
                         break;
                     }
                     case "operator": {
+
                         if (isFirstNumChosen === true && isOperatorChosen === false) {
                             operate(operator, Number(firstNumber), Number(secondNumber));
                             operator = button.textContent;
-                            isSecondNumChosen = false;
                             firstNumber = display.textContent;
                             secondNumber = 0;
                         } else {
@@ -116,18 +116,20 @@
                             isOperatorChosen = true;
                             isFirstNumChosen = true;
                         }
+
                         break;
                     }
                     case "equal": {
                         if (isFirstNumChosen === true && isOperatorChosen === false) {
                             operate(operator, Number(firstNumber), Number(secondNumber));
-                            isSecondNumChosen = false;
                             firstNumber = display.textContent;
                             secondNumber = 0;
-                        } else {
-                            isFirstNumChosen = true;
+                            clear();
                         }
-                        clear();
+                        // else {
+                        //     isFirstNumChosen = true;
+                        // }
+
                         break;
                     }
                     case "clear": {
@@ -137,7 +139,9 @@
                     }
                 }
 
-                console.log(firstNumber, operator, secondNumber)
+                console.log(`firstNumber: ${firstNumber} operator: ${operator} 
+                secondNumber: ${secondNumber} isFirstNumChosen: ${isFirstNumChosen} 
+                isOperatorChosen: ${isOperatorChosen} isSecondNumChosen ${isSecondNumChosen}`)
 
             })
         };
