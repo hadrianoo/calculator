@@ -39,13 +39,13 @@
         const display = document.querySelector("p");
 
         function add(firstNum, secondNum) {
-            return firstNum + secondNum;
+            return Number((firstNum + secondNum).toFixed(4));
         };
         function subtract(firstNum, secondNum) {
-            return firstNum - secondNum;
+            return Number((firstNum - secondNum).toFixed(4));
         };
         function multiply(firstNum, secondNum) {
-            return firstNum * secondNum;
+            return Number((firstNum * secondNum).toFixed(4));
         };
         function divide(firstNum, secondNum) {
             if (secondNum === Number(0)) return "Not this time";
@@ -132,12 +132,17 @@
                         break;
                     }
                     case "dot": {
-                        if (isFirstNumChosen === false && firstNumber.length !== 0) {
-                            firstNumber += button.textContent;
-                            display.textContent = firstNumber;
-                        } else if (secondNumber.length !== 0) {
-                            secondNumber += button.textContent;
-                            display.textContent = secondNumber;
+                        if (!firstNumber.includes(".")) {
+                            if (isFirstNumChosen === false && firstNumber.length !== 0) {
+                                firstNumber += button.textContent;
+                                display.textContent = firstNumber;
+                            }
+                        }
+                        if (!secondNumber.includes(".")) {
+                            if (secondNumber.length !== 0) {
+                                secondNumber += button.textContent;
+                                display.textContent = secondNumber;
+                            }
                         }
                         break;
                     }
