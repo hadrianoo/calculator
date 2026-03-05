@@ -48,7 +48,7 @@
             return Number((firstNum * secondNum).toFixed(4));
         };
         function divide(firstNum, secondNum) {
-            if (secondNum === Number(0)) return "Not this time";
+            if (secondNum === 0) return "Not this time";
             return Number((firstNum / secondNum).toFixed(4));
         };
 
@@ -85,77 +85,76 @@
             };
         };
 
-        function update() {
 
-            container.addEventListener('click', (event) => {
-                let button = event.target;
+        container.addEventListener('click', (event) => {
+            let button = event.target;
 
-                switch (button.className) {
-                    case "digit": {
-                        if (!isFirstNumChosen) {
-                            firstNumber += button.textContent;
-                            display.textContent = firstNumber;
-                        } else {
-                            secondNumber += button.textContent;
-                            display.textContent = secondNumber;
-                            isOperatorChosen = false;
-                        }
-                        break;
+            switch (button.className) {
+                case "digit": {
+                    if (!isFirstNumChosen) {
+                        firstNumber += button.textContent;
+                        display.textContent = firstNumber;
+                    } else {
+                        secondNumber += button.textContent;
+                        display.textContent = secondNumber;
+                        isOperatorChosen = false;
                     }
-                    case "operator": {
-                        if (isFirstNumChosen && !isOperatorChosen) {
-                            operate(operator, Number(firstNumber), Number(secondNumber));
-                            operator = button.textContent;
-                            firstNumber = display.textContent;
-                            secondNumber = "";
-                        } else {
-                            operator = button.textContent;
-                            isOperatorChosen = true;
-                            isFirstNumChosen = true;
-                        }
-                        break;
-                    }
-                    case "equal": {
-                        if (isFirstNumChosen && !isOperatorChosen) {
-                            operate(operator, Number(firstNumber), Number(secondNumber));
-                            firstNumber = display.textContent;
-                            secondNumber = "";
-                            clear();
-                        }
-                        break;
-                    }
-                    case "dot": {
-                        if (!firstNumber.includes(".") && !isFirstNumChosen && firstNumber.length !== 0) {
-                            firstNumber += button.textContent;
-                            display.textContent = firstNumber;
-                        }
-                        if (!secondNumber.includes(".") && secondNumber.length !== 0) {
-                            secondNumber += button.textContent;
-                            display.textContent = secondNumber;
-                        }
-                        break;
-                    }
-                    case "back": {
-                        if (!isFirstNumChosen && firstNumber.length !== 0) {
-                            console.log(firstNumber)
-                            firstNumber = firstNumber.slice(0, -1);
-                            console.log(firstNumber)
-                            display.textContent = firstNumber;
-                        } else if (secondNumber.length !== 0) {
-                            secondNumber = secondNumber.slice(0, -1);
-                            display.textContent = secondNumber;
-                        }
-                        break;
-                    }
-                    case "clear": {
-                        display.textContent = "0";
-                        clear();
-                        break;
-                    }
+                    break;
                 }
-            })
-        };
-        update()
+                case "operator": {
+                    if (isFirstNumChosen && !isOperatorChosen) {
+                        operate(operator, Number(firstNumber), Number(secondNumber));
+                        operator = button.textContent;
+                        firstNumber = display.textContent;
+                        secondNumber = "";
+                    } else {
+                        operator = button.textContent;
+                        isOperatorChosen = true;
+                        isFirstNumChosen = true;
+                    }
+                    break;
+                }
+                case "equal": {
+                    if (isFirstNumChosen && !isOperatorChosen) {
+                        operate(operator, Number(firstNumber), Number(secondNumber));
+                        firstNumber = display.textContent;
+                        secondNumber = "";
+                        clear();
+                    }
+                    break;
+                }
+                case "dot": {
+                    if (firstNumber.length === 0) {
+                        firstNumber = "0";
+                    }
+                    if (!firstNumber.includes(".") && !isFirstNumChosen && firstNumber.length !== 0) {
+                        firstNumber += button.textContent;
+                        display.textContent = firstNumber;
+                    }
+                    if (!secondNumber.includes(".") && secondNumber.length !== 0) {
+                        secondNumber += button.textContent;
+                        display.textContent = secondNumber;
+                    }
+                    break;
+                }
+                case "back": {
+                    if (!isFirstNumChosen && firstNumber.length !== 0) {
+                        firstNumber = firstNumber.slice(0, -1);
+                        display.textContent = firstNumber;
+                    } else if (secondNumber.length !== 0) {
+                        secondNumber = secondNumber.slice(0, -1);
+                        display.textContent = secondNumber;
+                    }
+                    break;
+                }
+                case "clear": {
+                    display.textContent = "0";
+                    clear();
+                    break;
+                }
+            }
+        })
+
     </script>
 
 </body>
